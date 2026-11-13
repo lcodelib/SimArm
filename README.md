@@ -83,7 +83,3 @@ pip install -r scripts/yolo11/requirements.txt
 ```
 
 手眼 / 双目等 Python 依赖见各子目录下的 `requirements.txt` 与 `*.example.yaml`。
-
-## 许可证
-
-私有项目（`private`）。如需开源许可，请另行补充。

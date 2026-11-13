@@ -1,0 +1,4 @@
+# OpenCV line extract deps (Blender script does not need these)
+opencv-python>=4.8
+numpy>=1.24
+PyYAML>=6.0

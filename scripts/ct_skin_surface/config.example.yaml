@@ -1,0 +1,35 @@
+# CT DICOM → 皮肤表面 PLY 示例配置
+# 复制后修改 dicom_dir / output_dir
+
+dicom_dir: "E:/SimArm/ct_data/series_001"
+output_dir: "E:/SimArm/ct_output/skin_001"
+
+# 是否递归扫描子目录
+recursive: true
+
+# 可选：指定 SeriesInstanceUID；留空则自动选切片最多的序列
+# series_uid: ""
+
+ply_name: "skin_surface.ply"
+# marching_cubes 时是否把三角面一并写入 PLY（便于 MeshLab 查看）
+write_mesh_faces: true
+
+log_level: INFO
+
+skin:
+  # 密度阈值（HU）：大于该值视为组织。空气约 -1000，体表常用 -200
+  hu_threshold: -200.0
+  # 表面提取：marching_cubes | boundary
+  method: marching_cubes
+  # 输出坐标单位：m（与立体点云一致）| mm（DICOM 原生）
+  coord_unit: m
+  # MC 前高斯平滑（体素单位）；0=不平滑
+  gaussian_sigma: 1.0
+  # 形态学开运算半径（体素）；0=跳过
+  morph_open_radius: 1
+  # 仅保留最大连通域（抑制床板等）
+  keep_largest: true
+  # 体数据抽稀步长（加速）；1=不抽稀
+  volume_stride: 1
+  # 点云体素下采样边长（与 coord_unit 同单位）；0=不下采样
+  point_voxel_size: 0.0

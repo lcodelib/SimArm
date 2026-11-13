@@ -1,0 +1,36 @@
+# SimArm 双目深度：内参来自左右手眼 config，外参为 5 cm 水平基线（支架 +X）
+
+left_image: "E:/SimArm/hand_eye_data/left_camera/verify.png"
+right_image: "E:/SimArm/hand_eye_data/right_camera/verify.png"
+# 采集对图时可改为 capture_001.png 等同名序号
+
+output_dir: "E:/SimArm/stereo_output"
+
+left_config: "E:/SimArm/hand_eye_data/left_camera/config.yaml"
+right_config: "E:/SimArm/hand_eye_data/right_camera/config.yaml"
+
+# OpenCV 外参：p_right = R @ p_left + T
+# 支架：右目在左目 +X 侧 5 cm → OpenCV Tx 为负（勿填 +0.05，否则点云 Z 为负）
+extrinsic:
+  R:
+    - [1.0, 0.0, 0.0]
+    - [0.0, 1.0, 0.0]
+    - [0.0, 0.0, 1.0]
+  T: [-0.05, 0.0, 0.0]
+
+# 也可用 baseline_m 自动生成 T（与上式等价）：
+# baseline_m: 0.05
+# simarm_baseline_positive_x: true
+
+baseline_m: 0.05
+
+stereo:
+  alpha: 0.0
+  algorithm: sgbm
+  num_disparities: 128
+  block_size: 5
+  min_disparity: 0
+
+point_stride: 2
+max_points: 500000
+max_depth_m: 10.0

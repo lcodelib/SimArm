@@ -1,0 +1,51 @@
+# 双目深度 / 点云示例配置（复制后修改路径与标定参数）
+#
+# SimArm 推荐直接使用 config.hand_eye.yaml（引用左右手眼 config + 5 cm 基线）
+
+left_image: "E:/SimArm/hand_eye_data/left_camera/capture_024.png"
+right_image: "E:/SimArm/hand_eye_data/right_camera/capture_012.png"
+
+output_dir: "E:/SimArm/stereo_output"
+
+# 方式 A：引用手眼 config.yaml（与 hand_eye_data/*/config.yaml 一致）
+# left_config: "E:/SimArm/hand_eye_data/left_camera/config.yaml"
+# right_config: "E:/SimArm/hand_eye_data/right_camera/config.yaml"
+
+# 方式 B：内联内参（与 OpenCV / 手眼 camera 段一致）
+left:
+  fx: 738.1094
+  fy: 738.1094
+  cx: 640.0
+  cy: 360.0
+  dist_coeffs: [0.0, 0.0, 0.0, 0.0]
+
+right:
+  fx: 738.1094
+  fy: 738.1094
+  cx: 640.0
+  cy: 360.0
+  dist_coeffs: [0.0, 0.0, 0.0, 0.0]
+
+# 外参：右相机相对左相机，p_right = R @ p_left + T（单位：米）
+extrinsic:
+  R:
+    - [1.0, 0.0, 0.0]
+    - [0.0, 1.0, 0.0]
+    - [0.0, 0.0, 1.0]
+  # SimArm 右目在左目 +X：OpenCV T 的 x 为负
+  T: [-0.05, 0.0, 0.0]
+
+baseline_m: 0.05
+
+# 立体匹配与校正
+stereo:
+  alpha: 0.0          # stereoRectify 有效像素比例，0=裁黑边多，1=保留视野多
+  algorithm: sgbm     # sgbm | bm
+  num_disparities: 128
+  block_size: 5
+  min_disparity: 0
+
+# 点云下采样：stride=2 约 1/4 像素
+point_stride: 2
+max_points: 500000
+max_depth_m: 10.0

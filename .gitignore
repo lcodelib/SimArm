@@ -1,0 +1,96 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Secrets / credentials / local env (never commit)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.ppk
+id_rsa
+id_rsa.*
+id_ed25519
+id_ed25519.*
+id_ecdsa
+id_ecdsa.*
+*.keystore
+credentials.json
+**/secrets/
+**/*secret*
+**/*credential*
+
+# Local capture / calibration / stereo outputs
+stereo_data/
+stereo_output/
+hand_eye_data/
+
+# Machine-local exported configs (keep *.example.yaml)
+scripts/hand_eye_calibration/config.yaml
+scripts/floorplan_walls/config.yaml
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+
+# ML weights & YOLO local artifacts (place models locally)
+*.onnx
+*.pt
+*.pth
+*.weights
+scripts/yolo11/output/
+scripts/yolo11/*.jpg
+scripts/yolo11/*.jpeg
+scripts/yolo11/*.png
+
+# Screenshots / misc local media at repo root
+/scene_3d.png
+
+# Unrelated / local-only trees
+/vue-app/
+/docs/
+
+# Medical / large local datasets under scripts
+scripts/ct_skin_surface/CT/
+scripts/ct_skin_surface/skin/
+scripts/Spine/
+scripts/floorplan_walls/output/
+scripts/blender_markers/output/
+
+# Nested git repos / archives
+**/.git/
+
+# public: only ship aubo_C5 meshes + human.glb
+/public/*
+!/public/aubo_C5/
+!/public/aubo_C5/**
+!/public/human.glb

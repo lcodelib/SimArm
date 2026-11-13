@@ -1,0 +1,54 @@
+# 平面图墙体提取配置（复制为 config.yaml 后手填）
+
+# 输入平面图（PNG / JPG）
+image: path/to/floorplan.png
+
+# 输出目录
+output_dir: output/floorplan_walls
+
+# 比例尺：1 像素对应多少米（手填，必须与图纸一致）
+# 例：图纸标注 1m = 50px → meters_per_pixel: 0.02
+meters_per_pixel: 0.02
+
+# 墙厚（米），挤出时使用；抽线阶段仅写入 JSON
+wall_thickness_m: 0.2
+
+# 墙高（米），写入 JSON 供 Blender 读取；也可在 Blender 脚本顶部再改
+wall_height_m: 2.8
+
+# 图像预处理
+preprocess:
+  # 是否先转灰度并高斯模糊（像素）
+  blur_ksize: 3
+  # 二值化：otsu | adaptive | fixed
+  threshold_mode: otsu
+  # fixed 模式阈值（0~255）；墙线较暗时通常不必改
+  fixed_threshold: 128
+  # True：墙为深色线（常见）；False：墙为浅色线
+  walls_are_dark: true
+  # 形态学闭运算核大小（奇数），用于连接断裂墙线
+  morph_close_ksize: 3
+  # 形态学开运算核大小（奇数），去除噪点；0 表示跳过
+  morph_open_ksize: 0
+  # 骨架化：把粗墙线收成中心线，减少霍夫双边重复
+  skeletonize: true
+
+# 线段提取（概率霍夫）
+hough:
+  threshold: 40
+  min_line_length_px: 30
+  max_line_gap_px: 8
+  # 骨架化后建议设为 null，直接对骨架霍夫；非骨架时可填 50/150
+  canny_low: null
+  canny_high: null
+
+# 线段合并（共线且端点接近则合并）
+merge:
+  angle_tol_deg: 8.0
+  dist_tol_m: 0.15
+  gap_tol_m: 0.25
+
+# 过滤过短墙段（米）
+min_wall_length_m: 0.3
+
+log_level: INFO
